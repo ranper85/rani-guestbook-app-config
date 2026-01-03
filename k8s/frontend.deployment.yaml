@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rani-guestbook-frontend-deployment
+  namespace: grupp1
+  labels:
+    app: rani-guestbook-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rani-guestbook-frontend
+  template:
+    metadata:
+      labels:
+        app: rani-guestbook-frontend
+    spec:
+      containers:
+        - name: rani-guestbook-frontend
+          image: 
+          ports:
+            - containerPort: 8080
+
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 1
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"

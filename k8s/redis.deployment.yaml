@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rani-guestbook-redis-deployment
+  namespace: grupp1
+  labels:
+    app: rani-guestbook-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rani-guestbook-redis
+  template:
+    metadata:
+      labels:
+        app: rani-guestbook-redis
+    spec:
+      containers:
+        - name: rani-guestbook-redis
+          image: quay.io/kurs/redis:latest
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rani-guestbook-redis-secret
+                  key: REDIS_PASSWORD
+          volumeMounts:
+            - name: redis-data
+              mountPath: /var/lib/redis/data
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: rani-guestbook-redis-pvc
+

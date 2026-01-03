@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rani-guestbook-backend-config
+  namespace: grupp1
+data:
+  DB_HOST: "rani-guestbook-postgres-service"
+  DB_PORT: "5432"
+  

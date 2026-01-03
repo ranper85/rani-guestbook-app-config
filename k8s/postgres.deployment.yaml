@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rani-guestbook-postgres-deployment
+  namespace: grupp1
+  labels:
+    app: rani-guestbook-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rani-guestbook-postgres
+  template:
+    metadata:
+      labels:
+        app: rani-guestbook-postgres
+    spec:
+      containers:
+        - name: rani-guestbook-postgres
+          image: quay.io/fedora/postgresql-16:latest
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rani-guestbook-postgres-secret
+                  key: POSTGRESQL_USER
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rani-guestbook-postgres-secret
+                  key: POSTGRESQL_PASSWORD
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: rani-guestbook-postgres-secret
+                  key: POSTGRESQL_DATABASE
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/pgsql/data
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: rani-guestbook-postgres-pvc

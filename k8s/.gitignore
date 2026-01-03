@@ -1,0 +1,4 @@
+# ignore all secret files
+redis.secret.yaml
+postgres.secret.yaml
+.DS_Store
