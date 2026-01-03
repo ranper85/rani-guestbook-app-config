@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rani-guestbook-frontend
-          image: 
+          image: quay.io/ranper3110/guestbook-frontend:latest 
           ports:
             - containerPort: 8080
 
