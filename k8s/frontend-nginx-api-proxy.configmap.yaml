@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rani-guestbook-frontend-nginx-api-proxy
+  namespace: grupp1
+data:
+  20-api-proxy.conf: |
+    location /api/ {
+      proxy_pass http://rani-guestbook-backend-service:8080/api/;
+    }
+

@@ -21,6 +21,12 @@ spec:
           ports:
             - containerPort: 8080
 
+# mount the nginx config file
+          volumeMounts:
+            - name: nginx-api-proxy
+              mountPath: /opt/app-root/etc/nginx.default.d/20-api-proxy.conf
+              subPath: 20-api-proxy.conf
+
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -44,3 +50,8 @@ spec:
             limits:
               cpu: "200m"
               memory: "256Mi"
+    # define where the mounted file comes from
+      volumes:
+        - name: nginx-api-proxy
+          configMap:
+            name: rani-guestbook-frontend-nginx-api-proxy
