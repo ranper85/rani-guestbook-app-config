@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rani-guestbook-backend
-          image: quay.io/ranper3110/guestbook-backend:latest 
+          image: quay.io/ranper3110/guestbook-backend:1.0.1-f616a37
           ports:
             - containerPort: 8080
 
