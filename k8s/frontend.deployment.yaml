@@ -6,7 +6,7 @@ metadata:
   labels:
     app: rani-guestbook-frontend
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: rani-guestbook-frontend
